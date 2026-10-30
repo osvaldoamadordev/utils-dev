@@ -9,6 +9,7 @@ Este repositorio reúne scripts, utilidades y curiosidades para desarrolladores 
 - [`scripts/harden-ubuntu26.sh`](scripts/harden-ubuntu26.sh): configura medidas básicas de seguridad para Ubuntu 26 y SSH.
 - [`scripts/ubuntu-maintenance.sh`](scripts/ubuntu-maintenance.sh): inventario, actualización y limpieza interactiva de herramientas en Ubuntu Server.
 - [`scripts/backup-server.sh`](scripts/backup-server.sh): respaldo de proyectos y configuraciones personales del servidor.
+- [`cmd/script-panel/`](cmd/script-panel/): CLI en Go con Cobra para consultar, previsualizar y ejecutar scripts.
 
 Las instrucciones de uso, requisitos y precauciones de cada utilidad están en [`docs/scripts/`](docs/scripts/README.md).
 
@@ -19,9 +20,26 @@ Conéctate al servidor por SSH, cambia al directorio del repositorio y consulta 
 ```bash
 ssh usuario@servidor
 cd ruta/al/repositorio
+./scripts/script-panel.sh
 ./scripts/ubuntu-maintenance.sh --help
 ./scripts/ubuntu-maintenance.sh --dry-run
 ```
+
+El panel usa Go 1.24.2 o posterior, Cobra y Bubble Tea. Desde la raíz del
+repositorio, ejecútalo con:
+
+```bash
+go run ./cmd/script-panel
+```
+
+Filtra escribiendo, navega con las flechas y revisa el código en la vista
+previa. También puedes usar los subcomandos `list`, `preview` y `run`; este
+último siempre pide confirmación. La ruta anterior
+`./scripts/script-panel.sh` se conserva como lanzador compatible.
+
+Ejecuta el panel como usuario normal, nunca con `sudo`. Solo el endurecimiento
+de Ubuntu solicita `sudo`; revisa su guía y prueba una segunda sesión SSH con
+llave antes de confirmar.
 
 Para abrir el menú interactivo:
 

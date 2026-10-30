@@ -10,3 +10,4 @@ del directorio [`scripts/`](../../scripts/).
 | [`backup-server.sh`](../../scripts/backup-server.sh) | [Respaldar el home del servidor](backup-server.md) |
 | [`harden-ubuntu26.sh`](../../scripts/harden-ubuntu26.sh) | [Endurecer Ubuntu 26](harden-ubuntu26.md) |
 | [`ubuntu-maintenance.sh`](../../scripts/ubuntu-maintenance.sh) | [Mantener Ubuntu Server](ubuntu-maintenance.md) |
+| [`script-panel.sh`](../../scripts/script-panel.sh) | [Consultar y previsualizar scripts](script-panel.md) |
