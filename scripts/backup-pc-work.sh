@@ -46,7 +46,7 @@ DESTINO="${2:-$HOME/backups-manuales}"
 MARCA_TIEMPO="$(date '+%Y%m%d_%H%M%S')"
 HOST_ORIGINAL="$(hostname -s)"
 HOST_SEGURO="$(printf '%s' "$HOST_ORIGINAL" | tr -cs '[:alnum:]._-' '_')"
-ARCHIVO="bk_${MARCA_TIEMPO}_${HOST_SEGURO}.tgz"
+ARCHIVO="bk_pc-work_${MARCA_TIEMPO}_${HOST_SEGURO}.tgz"
 
 if [[ ! -d "$ORIGEN" ]]; then
   printf 'Error: el directorio de origen no existe: %s\n' "$ORIGEN" >&2
@@ -151,6 +151,7 @@ EXCLUSIONES=(
   '--exclude=*.dmg'
   '--exclude=*.pkg'
   '--exclude=Projects.tgz'
+  '--exclude=bk_pc-work_*.tgz'
   '--exclude=bk_*.tgz'
   '--exclude=respaldo_*.tgz'
   "--exclude=$ARCHIVO"
