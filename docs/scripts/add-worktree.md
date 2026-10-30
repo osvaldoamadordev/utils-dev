@@ -8,24 +8,26 @@ una rama local que sigue esa rama remota.
 
 ## Uso
 
-Desde cualquier ubicación dentro del repositorio principal —no desde un
-worktree existente— ejecuta:
+Desde el repositorio principal —no desde un worktree existente— entra en la
+ruta del script y ejecútalo directamente:
 
 ```bash
-bash /ruta/al/repositorio/scripts/add-worktree.sh feature-name
+cd /ruta/al/repositorio/scripts
+./add-worktree.sh feature-name
 ```
 
 Para elegir la rama base:
 
 ```bash
-bash /ruta/al/repositorio/scripts/add-worktree.sh feature-name develop
+./add-worktree.sh feature-name develop
 ```
 
 Por ejemplo, desde la raíz del repositorio:
 
 ```bash
-bash scripts/add-worktree.sh 001-crm-prospectos
-bash scripts/add-worktree.sh 002-api develop
+cd scripts
+./add-worktree.sh 001-crm-prospectos
+./add-worktree.sh 002-api develop
 ```
 
 El nombre debe comenzar con una letra o un número y solo puede contener
@@ -33,7 +35,7 @@ letras, números, guiones y guiones bajos. La rama base debe existir localmente
 o como `origin/<rama>`. Consulta la sintaxis con:
 
 ```bash
-bash scripts/add-worktree.sh --help
+./scripts/add-worktree.sh --help
 ```
 
 Al finalizar, cambia al directorio `worktrees/<feature>` que muestra el

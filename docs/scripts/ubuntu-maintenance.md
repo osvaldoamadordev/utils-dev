@@ -11,14 +11,15 @@ Server; el script usa `sudo` solo para las operaciones de APT.
 Desde la raíz del repositorio, consulta la ayuda y el plan sin ejecutar acciones:
 
 ```bash
-bash scripts/ubuntu-maintenance.sh --help
-bash scripts/ubuntu-maintenance.sh --dry-run
+cd /ruta/al/repositorio/scripts
+./ubuntu-maintenance.sh --help
+./ubuntu-maintenance.sh --dry-run
 ```
 
 Para abrir el menú:
 
 ```bash
-bash scripts/ubuntu-maintenance.sh
+./ubuntu-maintenance.sh
 ```
 
 En el menú, `i` muestra el inventario, `p` vuelve a mostrar el plan, `u`

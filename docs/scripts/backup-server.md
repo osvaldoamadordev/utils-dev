@@ -9,19 +9,20 @@ Omite cachés, dependencias instaladas, sesiones y otros datos regenerables.
 Consulta primero la ayuda:
 
 ```bash
-bash scripts/backup-server.sh --help
+cd /ruta/al/repositorio/scripts
+./backup-server.sh --help
 ```
 
 Sin argumentos, respalda `$HOME` en `$HOME/backups-servidor`:
 
 ```bash
-bash scripts/backup-server.sh
+./backup-server.sh
 ```
 
 También puedes indicar un origen y, opcionalmente, un destino:
 
 ```bash
-bash scripts/backup-server.sh /home/usuario /ruta/segura
+./backup-server.sh /home/usuario /ruta/segura
 ```
 
 Si indicas solo el origen, el destino continúa siendo

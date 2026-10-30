@@ -9,20 +9,21 @@ script. Omite cachés, dependencias instaladas y archivos regenerables.
 Consulta primero la ayuda:
 
 ```bash
-bash scripts/backup-pc-work.sh --help
+cd /ruta/al/repositorio/scripts
+./backup-pc-work.sh --help
 ```
 
 Sin argumentos, respalda las rutas existentes bajo `$HOME` en
 `$HOME/backups-manuales`:
 
 ```bash
-bash scripts/backup-pc-work.sh
+./backup-pc-work.sh
 ```
 
 También puedes indicar otro origen y, opcionalmente, un destino:
 
 ```bash
-bash scripts/backup-pc-work.sh /home/usuario /ruta/segura
+./backup-pc-work.sh /home/usuario /ruta/segura
 ```
 
 Si indicas solo el origen, el destino continúa siendo
