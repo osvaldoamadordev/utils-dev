@@ -2,15 +2,44 @@
 
 set -Eeuo pipefail
 
-VERSION='2026-09-09.2'
+VERSION='2026-10-30.1'
 
-# Uso:
-#   ./respaldo_ubuntu.sh [DIRECTORIO_ORIGEN] [DIRECTORIO_DESTINO]
-#
-# Ejemplo:
-#   ./respaldo_ubuntu.sh /home/usuario /mnt/backups
-#
-# Sin argumentos, respalda desde $HOME hacia $HOME/backups-manuales.
+mostrar_ayuda() {
+  cat <<EOF
+Uso: ${0##*/} [DIRECTORIO_ORIGEN] [DIRECTORIO_DESTINO]
+
+Sin argumentos, respalda desde \$HOME hacia \$HOME/backups-manuales.
+Si se proporciona solo el origen, el destino predeterminado sigue siendo
+\$HOME/backups-manuales.
+
+El respaldo incluye las rutas configuradas en el script. Se omiten cachés,
+dependencias instaladas y archivos regenerables conocidos. --one-file-system
+omite montajes de otros sistemas de archivos. Los archivos que cambien durante
+la ejecución pueden quedar en un estado inconsistente; cierre las aplicaciones
+que los modifican antes de respaldar.
+
+La restauración de propietarios requiere privilegios de administrador.
+EOF
+}
+
+if (( $# == 1 )) && [[ "$1" == '--help' || "$1" == '-h' ]]; then
+  mostrar_ayuda
+  exit 0
+fi
+
+if (( $# > 2 )); then
+  printf 'Error: se aceptan como máximo dos argumentos.\n\n' >&2
+  mostrar_ayuda >&2
+  exit 2
+fi
+
+if (( $# > 0 )) && [[ "$1" == -* ]]; then
+  printf 'Error: opción desconocida: %s\n\n' "$1" >&2
+  mostrar_ayuda >&2
+  exit 2
+fi
+
+umask 077
 
 ORIGEN="${1:-$HOME}"
 DESTINO="${2:-$HOME/backups-manuales}"
@@ -29,8 +58,6 @@ ORIGEN="$(cd -- "$ORIGEN" && pwd -P)"
 DESTINO="$(cd -- "$DESTINO" && pwd -P)"
 SALIDA="$DESTINO/$ARCHIVO"
 TEMPORAL="$DESTINO/.${ARCHIVO}.parcial"
-
-umask 077
 
 # Seguridad: este script nunca elimina archivos y tampoco sobrescribe respaldos.
 # Si una ejecución se interrumpe, el archivo .parcial se conserva para revisión.
@@ -60,7 +87,6 @@ RUTAS_SOLICITADAS=(
   '.zshrc'
   'Caranty'
   'Projects'
-  '.bash_myalias'
   'install-tmux'
   'technical-tests'
   'scripts-dev'
@@ -136,6 +162,8 @@ EXCLUSIONES=(
 printf 'Script de respaldo: versión %s\n' "$VERSION"
 printf 'Creando respaldo de %s\n' "$ORIGEN"
 printf 'Destino: %s\n' "$SALIDA"
+printf 'Aviso: --one-file-system omitirá montajes de otros sistemas de archivos.\n' >&2
+printf 'Aviso: cierre aplicaciones que modifiquen los archivos incluidos durante el respaldo.\n' >&2
 
 tar \
   --create \
@@ -145,6 +173,8 @@ tar \
   --one-file-system \
   --atime-preserve=system \
   --numeric-owner \
+  --acls \
+  --xattrs \
   "${EXCLUSIONES[@]}" \
   -- \
   "${RUTAS_EXISTENTES[@]}"
@@ -164,4 +194,5 @@ chmod 600 "$SALIDA"
 printf '\nRespaldo completado y verificado:\n%s\n' "$SALIDA"
 du -h -- "$SALIDA"
 printf '\nPara revisar su contenido:\n  tar -tzf %q | less\n' "$SALIDA"
-printf 'Para restaurarlo en otro directorio:\n  mkdir -p /ruta/restauracion && tar -xzf %q -C /ruta/restauracion\n' "$SALIDA"
+printf 'Para restaurarlo conservando propietarios, ACL y atributos extendidos:\n'
+printf '  sudo mkdir -p /ruta/restauracion && sudo tar --extract --gzip --file %q --directory /ruta/restauracion --same-owner --acls --xattrs\n' "$SALIDA"
