@@ -5,6 +5,7 @@ Este repositorio reúne scripts, utilidades y curiosidades para desarrolladores 
 ## Contenido
 
 - [`scripts/ubuntu-maintenance.sh`](scripts/ubuntu-maintenance.sh): inventario, actualización y limpieza interactiva de herramientas en Ubuntu Server.
+- [`scripts/backup-server.sh`](scripts/backup-server.sh): respaldo de proyectos y configuraciones personales del servidor.
 
 ## Uso
 
@@ -23,9 +24,19 @@ Para abrir el menú interactivo:
 bash scripts/ubuntu-maintenance.sh
 ```
 
+Para revisar y crear un respaldo del home del servidor:
+
+```bash
+bash scripts/backup-server.sh --help
+bash scripts/backup-server.sh
+```
+
+El respaldo predeterminado se guarda en `$HOME/backups-servidor`. También puedes indicar origen y destino como argumentos. El script excluye cachés, dependencias instaladas y sesiones regenerables; `Projects` puede hacer que el archivo sea grande.
+
 ## Notas de seguridad
 
 - El script de mantenimiento está pensado para una sesión interactiva en Ubuntu; no lo ejecutes como `root`.
+- El respaldo puede incluir claves SSH y credenciales de configuración. Limita el acceso al archivo y guárdalo en un destino cifrado y confiable.
 - Las acciones requieren confirmación. Revisa cada operación antes de aceptarla.
 - Las actualizaciones pueden cambiar versiones de los paquetes y algunas limpiezas pueden requerir descargas posteriores.
 - Consulta el propio script antes de usarlo en un servidor importante.

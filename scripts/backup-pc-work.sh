@@ -86,7 +86,6 @@ RUTAS_SOLICITADAS=(
   '.tmux'
   '.zshrc'
   'Caranty'
-  'Projects'
   'install-tmux'
   'technical-tests'
   'scripts-dev'
