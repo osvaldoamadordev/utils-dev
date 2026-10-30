@@ -1,0 +1,18 @@
+# Environment variables and local environment directories
+.env
+.env.*
+!.env.example
+!.env.*.example
+.envs/
+
+# Local credentials and secret files
+.aws/credentials
+.netrc
+secrets/
+credentials/
+id_rsa
+id_ed25519
+*.pem
+*.key
+*.p12
+*.pfx
