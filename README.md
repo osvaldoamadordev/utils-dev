@@ -4,8 +4,13 @@ Este repositorio reúne scripts, utilidades y curiosidades para desarrolladores 
 
 ## Contenido
 
+- [`scripts/add-worktree.sh`](scripts/add-worktree.sh): crea worktrees de Git para trabajar en ramas de funcionalidad.
+- [`scripts/backup-pc-work.sh`](scripts/backup-pc-work.sh): respalda rutas de trabajo y configuraciones seleccionadas del PC.
+- [`scripts/harden-ubuntu26.sh`](scripts/harden-ubuntu26.sh): configura medidas básicas de seguridad para Ubuntu 26 y SSH.
 - [`scripts/ubuntu-maintenance.sh`](scripts/ubuntu-maintenance.sh): inventario, actualización y limpieza interactiva de herramientas en Ubuntu Server.
 - [`scripts/backup-server.sh`](scripts/backup-server.sh): respaldo de proyectos y configuraciones personales del servidor.
+
+Las instrucciones de uso, requisitos y precauciones de cada utilidad están en [`docs/scripts/`](docs/scripts/README.md).
 
 ## Uso
 
@@ -43,4 +48,6 @@ El respaldo predeterminado se guarda en `$HOME/backups-servidor`. También puede
 
 ## Añadir contenido
 
-Organiza nuevas herramientas en directorios según su propósito. Al añadir una, documenta aquí qué hace, sus requisitos, cómo usarla y cualquier efecto que pueda tener en el sistema.
+Organiza nuevas herramientas en directorios según su propósito. Al añadir un
+script, incluye su descripción en este índice y agrega su guía de uso,
+requisitos y precauciones en [`docs/scripts/`](docs/scripts/README.md).
