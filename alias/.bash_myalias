@@ -241,6 +241,9 @@ alias ventana_tmux_horizontal="tmux split-window -vf"
 #-------------------------------------------------------------
 # Desarrollo: scripts y worktrees
 #-------------------------------------------------------------
+script_panel() {
+  "$HOME/utils-dev/scripts/script-panel.sh" "$@"
+}
 wt() {
   "$HOME/scripts-dev/wt" "$@"
 }
