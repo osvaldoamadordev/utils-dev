@@ -1,0 +1,195 @@
+#Mis alias OD0895
+#-------------------------------------------------------------
+# Aliases for Git.
+#-------------------------------------------------------------
+alias getrb="git checkout --track origin/$1"
+alias gc="git clone"
+alias glog="git log"
+alias gstatus="git status"
+alias g='git'
+alias gamend="git commit --amend --no-edit"      #Commit changes onto previous commit.
+alias gcommit="gitmoji -c"                      #Gitmoji commit standard.
+alias gpull='git pull origin $(git_current_branch)'
+alias gpush='git push origin $(git_current_branch)'
+alias grv="git remote set-url origin"
+alias gadd='git add .'
+alias greset='git reset'
+alias gstash='git stash'
+alias gstashpop='git stash pop'
+alias gnbranch="git checkout -b $1"
+alias gcbranch="git checkout $1"f
+alias glsb="git branch"
+alias glogarbol="git log --graph --decorate --oneline"
+alias deletecommitconcambios="git reset --soft HEAD~1"
+alias godev="git checkout development"
+alias gomain="git checkout main"
+alias goprod="git checkout production"
+
+#-------------------------------------------------------------
+# Aliases for Proyects Market Place GLOBAL Caranty
+#-------------------------------------------------------------
+alias gpushmainmpsantander="git push origin_mpsantander main_mpsantander:main"
+alias gpushdevmpsantander="git push origin_mpsantander develop_mpsantander:develop"
+
+
+alias gpushprodmpcarpit="git push origin_mpcarpit main_mpcarpit:main"
+alias gpushdevmpcarpit="git push origin_mpcarpit develop_mpcarpit:develop"
+
+alias gpulldevmpcarpit='git pull origin_mpcarpit develop'
+alias gpullprodmpcarpit='git pull origin_mpcarpit main'
+
+alias gpulldevmpsantander='git pull origin_mpsantander develop'
+alias gpullprodmpsantander='git pull origin_mpsantander main'
+
+alias godevsantander="git checkout develop_mpsantander"
+alias gomainsantander="git checkout main_mpsantander"
+
+alias godevcarpit="git checkout develop_mpcarpit"
+alias gomaincarpit="git checkout main_mpcarpit"
+
+alias mergeprod="git checkout production && git merge develop"
+
+# Will return the current branch name
+# Usage example: git pull origin $(current_branch)
+function current_branch() {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo ${ref#refs/heads/}
+}
+
+#-------------------------------------------------------------
+# Aliases for PNPM, NPM and YARN
+#-------------------------------------------------------------
+alias ni="npm install"
+alias pi="pnpm install"
+alias yi="yarn"                               #Same thing as yarn install.
+alias rmodule="rm -rf node_modules .yarn"     #removes node_modules folder for npm and pnpm. and .yarn for yarn.
+alias ns="npm run start"
+alias nsd="npm run start:dev"
+alias nd="npm run dev"
+alias npmy="npm init -y"
+alias ndglobal="npm list -g --depth 0"
+alias test_npm="npm run test"
+alias ndz="npm run dev:zsh"
+alias deletenodemodules="rm -rf node_modules"
+
+#-------------------------------------------------------------
+# Aliases for general stuff.
+#-------------------------------------------------------------
+alias nf=neofetch
+alias ls="ls -la"                          # colorize `ls` output
+alias reload_zsh="source ~/.zshrc"             # reload ZSH
+alias editar="code $HOME/.zshrc"
+alias editalias="code $HOME/.bash_myalias"
+alias cwd='pwd | pbcopy'                      #copy ruta
+alias home="cd ~"                             #go the home user
+alias HOME="cd ~"                             #go the home user
+alias findd="ls | grep $1"
+
+#-------------------------------------------------------------
+# Aliases Personal
+#-------------------------------------------------------------
+alias myprojects="cd ~/Projects"
+alias congob="cd ~/Projects/conGob"
+alias altum="cd ~/Projects/altum-erp"
+
+#-------------------------------------------------------------
+# Procesos
+#-------------------------------------------------------------
+alias  procesosangular="ps | grep 'ng serve'"
+
+#-------------------------------------------------------------
+# Yarn
+#-------------------------------------------------------------
+alias ynd="yarn dev"
+
+#-------------------------------------------------------------
+# Alias para dockers
+#-------------------------------------------------------------
+alias run_docker_dev="docker compose up --build"
+alias dcup="docker compose up"
+
+#-------------------------------------------------------------
+# Alias para proyects
+#-------------------------------------------------------------
+alias caranty="cd ~/Caranty"
+alias caranty_crm="cd ~/Caranty/CarantyCRM_Monorepo"
+
+#-------------------------------------------------------------
+# TMUX
+#-------------------------------------------------------------
+alias crm_dev_ia="~/scripts-dev/dev_agents_teams_crm"
+alias kill_tmux="tmux kill-server"
+alias ventana_tmux_vertical="tmux split-window -hf"
+alias ventana_tmux_horizontal="tmux split-window -vf"
+
+#-------------------------------------------------------------
+# Scripts Development
+#-------------------------------------------------------------
+alias wt="$HOME/scripts-dev/wt"
+
+#-------------------------------------------------------------
+# Aliases for Backups
+#-------------------------------------------------------------
+alias backup="$HOME/scripts-dev/respaldo_ubuntu.sh"
+
+#-------------------------------------------------------------
+# Aliases for AI tools
+#-------------------------------------------------------------
+alias CODEX_OPEN="headroom wrap codex --dangerously-bypass-approvals-and-sandbox $1"
+#alias OPEN_CLAUDE="headroom wrap claude --dangerously-skip-permissions $1"
+# LOSSLESS=1: sin compresión con pérdida (con PROTECT=Bash solo, los cuerpos de skill y los ficheros pegados como mensaje seguían mutilados).
+# --port 8788: wrap reutiliza el proxy que ya escucha en 8787, que arrancó sin estas variables; un puerto propio arranca uno que las hereda.
+
+alias CLAUDE_OPEN="HEADROOM_PROTECT_TOOL_RESULTS=Bash CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 HEADROOM_LOSSLESS=1 headroom wrap claude --port 8788 --dangerously-skip-permissions $1"
+alias COPILOT_OPEN="copilot $1"
+alias OPENCODE="headroom wrap opencode $1"
+alias OPEN_GENTLE_SHELL="gentle-shell $1"
+
+#-------------------------------------------------------------
+# Aliases DOCKER.
+#-------------------------------------------------------------
+# Servicio Docker
+alias docker_start='sudo systemctl start docker'
+alias docker_stop='sudo systemctl stop docker.service docker.socket'
+alias docker_restart='sudo systemctl restart docker'
+alias docker_status='systemctl status docker --no-pager'
+alias docker_enable='sudo systemctl enable --now docker'
+alias docker_disable='sudo systemctl disable --now docker.service docker.socket'
+alias docker_logs='sudo journalctl -u docker -f'
+
+# Contenedores e imágenes
+alias docker_ps='docker ps'
+alias docker_pa='docker ps -a'
+alias docker_stats='docker stats'
+alias docker_images='docker images'
+alias docker_volumes='docker volume ls'
+alias docker_networks='docker network ls'
+
+# Docker Compose
+alias docker_cup='docker compose up -d'
+alias docker_cdown='docker compose down'
+alias docker_crestart='docker compose restart'
+alias docker_cstop='docker compose stop'
+alias docker_cstart='docker compose start'
+alias docker_cps='docker compose ps'
+alias docker_clogs='docker compose logs -f'
+
+# Limpieza interactiva
+alias docker_prune='docker system prune'
+
+alias APAGAR_PC="sudo shutdown -h now"
+alias REINICIAR_PC="sudo reboot"
+alias DESACTIVAR_MODO_GRAFICO="sudo systemctl set-default multi-user.target && sudo reboot"
+alias ACTIVAR_MODO_GRAFICO="sudo systemctl set-default graphical.target && sudo reboot"
+alias ALMACENAMIENTO_N_RAM="df -h /var && free -h"
+
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+
+#-------------------------------------------------------------
+# System
+#-------------------------------------------------------------
+alias apagar_wifi="sudo nmcli device disconnect wlp0s20f3"
+alias encender_wifi="sudo nmcli device connect wlp0s20f3"
+alias status_wifi="nmcli device status"
