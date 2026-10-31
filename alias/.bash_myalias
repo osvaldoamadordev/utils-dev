@@ -269,6 +269,24 @@ descargar_backup_pc_work() {
   scp "ssh-pc-local:/home/osvaldo-amador/backups-manuales/$archivo" "$destino/"
 }
 
+descargar_backup_servidor() {
+  if (($# != 1)) || [[ ! "$1" =~ ^bk_server_[[:alnum:]_.-]+\.tgz$ ]]; then
+    printf 'Uso: descargar_backup_servidor <archivo-bk_server_.tgz>\n' >&2
+    return 2
+  fi
+
+  local archivo="$1"
+  local destino="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Backup - servers"
+
+  mkdir -p -- "$destino" || return
+  if [[ -e "$destino/$archivo" ]]; then
+    printf 'Ya existe en destino: %s\n' "$destino/$archivo" >&2
+    return 1
+  fi
+
+  scp "ssh-server-local:/home/osvaldoamador/backups-servidor/$archivo" "$destino/"
+}
+
 #-------------------------------------------------------------
 # Herramientas de IA
 #-------------------------------------------------------------
