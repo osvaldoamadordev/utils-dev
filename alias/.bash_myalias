@@ -249,11 +249,8 @@ wt() {
 }
 
 #-------------------------------------------------------------
-# Respaldos: crear y descargar respaldos
+# Respaldos: descargar respaldos
 #-------------------------------------------------------------
-backup() {
-  "$HOME/scripts-dev/respaldo_ubuntu.sh" "$@"
-}
 descargar_backup_pc_work() {
   if (($# != 1)) || [[ ! "$1" =~ ^bk_[[:alnum:]_.-]+\.tgz$ ]]; then
     printf 'Uso: descargar_backup_pc_work <archivo-bk_.tgz>\n' >&2
