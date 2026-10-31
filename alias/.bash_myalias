@@ -15,6 +15,9 @@ alias gstatus="git status"
 alias g='git'
 alias gamend="git commit --amend --no-edit"      #Commit changes onto previous commit.
 alias gcommit="gitmoji -c"                      #Gitmoji commit standard.
+alias gdiff='git diff'
+alias gdiffstaged='git diff --cached'
+alias glast='git log -1 --oneline --decorate'
 gpull() {
   local branch
   branch=$(_alias_current_branch) || return
@@ -40,6 +43,13 @@ gadd() {
     return 2
   fi
   git add -- "$@"
+}
+gunstage() {
+  if (($# == 0)); then
+    printf 'Uso: gunstage <archivo...>\n' >&2
+    return 2
+  fi
+  git restore --staged -- "$@"
 }
 alias greset='git reset'
 alias gstash='git stash'
@@ -115,6 +125,8 @@ alias deletenodemodules="rm -rf node_modules"
 #-------------------------------------------------------------
 alias nf=neofetch
 alias ll='ls -lah --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
 reload() {
   if [[ -n ${ZSH_VERSION:-} ]]; then
     source "$HOME/.zshrc"
