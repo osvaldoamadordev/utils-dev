@@ -1,6 +1,9 @@
-#Mis alias OD0895
+# Alias personales para Bash y Zsh.
+# Se carga desde el archivo de configuración del shell.
 #-------------------------------------------------------------
-# Aliases for Git.
+
+#-------------------------------------------------------------
+# Git: comandos generales
 #-------------------------------------------------------------
 getrb() {
   if (($# != 1)); then
@@ -76,7 +79,7 @@ alias gomain="git checkout main"
 alias goprod="git checkout production"
 
 #-------------------------------------------------------------
-# Aliases for Proyects Market Place GLOBAL Caranty
+# Git: ramas y remotos de proyectos
 #-------------------------------------------------------------
 alias gpushmainmpsantander="git push origin_mpsantander main_mpsantander:main"
 alias gpushdevmpsantander="git push origin_mpsantander develop_mpsantander:develop"
@@ -105,7 +108,7 @@ _alias_current_branch() {
 }
 
 #-------------------------------------------------------------
-# Aliases for PNPM, NPM and YARN
+# JavaScript: npm, pnpm y Yarn
 #-------------------------------------------------------------
 alias ni="npm install"
 alias pi="pnpm install"
@@ -119,14 +122,32 @@ alias ndglobal="npm list -g --depth 0"
 alias test_npm="npm run test"
 alias ndz="npm run dev:zsh"
 alias deletenodemodules="rm -rf node_modules"
+alias ynd="yarn dev"
 
 #-------------------------------------------------------------
-# Aliases for general stuff.
+# Shell: navegación y utilidades generales
 #-------------------------------------------------------------
 alias nf=neofetch
 alias ll='ls -lah --color=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
+home() {
+  cd "$HOME"
+}
+cwd() {
+  pwd | pbcopy
+}
+findd() {
+  if (($# != 1)); then
+    printf 'Uso: findd <texto>\n' >&2
+    return 2
+  fi
+  find . -maxdepth 1 -iname "*$1*" -print
+}
+
+#-------------------------------------------------------------
+# Shell: recarga y edición de configuración
+#-------------------------------------------------------------
 reload() {
   if [[ -n ${ZSH_VERSION:-} ]]; then
     source "$HOME/.zshrc"
@@ -157,22 +178,22 @@ editar() {
 editalias() {
   code "$HOME/.bash_myalias"
 }
-cwd() {
-  pwd | pbcopy
-}
-home() {
-  cd "$HOME"
-}
-findd() {
-  if (($# != 1)); then
-    printf 'Uso: findd <texto>\n' >&2
-    return 2
-  fi
-  find . -maxdepth 1 -iname "*$1*" -print
-}
 
 #-------------------------------------------------------------
-# Aliases Personal
+# SSH: conexiones y configuración
+#-------------------------------------------------------------
+alias SERVER_SSH="caffeinate -i ssh ssh-server-local"
+alias SERVER_TUNNEL_SSH="caffeinate -i ssh ssh-server-remote"
+alias PC_WORK_SSH="caffeinate -i ssh ssh-pc-local"
+alias PC_WORK_TUNNEL_SSH="caffeinate -i ssh ssh-pc-remote"
+edit_config_ssh() {
+  code "$HOME/.ssh/config"
+}
+# Host SSH directo por IP, si se necesita:
+# alias GO_PC_WORK="ssh osvaldo-amador@192.168.1.75"
+
+#-------------------------------------------------------------
+# Navegación: directorios de proyectos
 #-------------------------------------------------------------
 myprojects() {
   cd "$HOME/Projects"
@@ -185,25 +206,20 @@ altum() {
 }
 
 #-------------------------------------------------------------
-# Procesos
+# Procesos: búsqueda de procesos de desarrollo
 #-------------------------------------------------------------
 procesosangular() {
   pgrep -af -- 'ng serve'
 }
 
 #-------------------------------------------------------------
-# Yarn
-#-------------------------------------------------------------
-alias ynd="yarn dev"
-
-#-------------------------------------------------------------
-# Alias para dockers
+# Docker: desarrollo local
 #-------------------------------------------------------------
 alias run_docker_dev="docker compose up --build"
 alias dcup="docker compose up"
 
 #-------------------------------------------------------------
-# Alias para proyects
+# Navegación: directorios de proyectos Caranty
 #-------------------------------------------------------------
 caranty() {
   cd "$HOME/Caranty"
@@ -213,7 +229,7 @@ caranty_crm() {
 }
 
 #-------------------------------------------------------------
-# TMUX
+# Tmux: sesiones y paneles
 #-------------------------------------------------------------
 crm_dev_ia() {
   "$HOME/scripts-dev/dev_agents_teams_crm" "$@"
@@ -223,21 +239,38 @@ alias ventana_tmux_vertical="tmux split-window -hf"
 alias ventana_tmux_horizontal="tmux split-window -vf"
 
 #-------------------------------------------------------------
-# Scripts Development
+# Desarrollo: scripts y worktrees
 #-------------------------------------------------------------
 wt() {
   "$HOME/scripts-dev/wt" "$@"
 }
 
 #-------------------------------------------------------------
-# Aliases for Backups
+# Respaldos: crear y descargar respaldos
 #-------------------------------------------------------------
 backup() {
   "$HOME/scripts-dev/respaldo_ubuntu.sh" "$@"
 }
+descargar_backup_pc_work() {
+  if (($# != 1)) || [[ ! "$1" =~ ^bk_[[:alnum:]_.-]+\.tgz$ ]]; then
+    printf 'Uso: descargar_backup_pc_work <archivo-bk_.tgz>\n' >&2
+    return 2
+  fi
+
+  local archivo="$1"
+  local destino="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Backup - servers"
+
+  mkdir -p -- "$destino" || return
+  if [[ -e "$destino/$archivo" ]]; then
+    printf 'Ya existe en destino: %s\n' "$destino/$archivo" >&2
+    return 1
+  fi
+
+  scp "ssh-pc-local:/home/osvaldo-amador/backups-manuales/$archivo" "$destino/"
+}
 
 #-------------------------------------------------------------
-# Aliases for AI tools
+# Herramientas de IA
 #-------------------------------------------------------------
 CODEX_OPEN() {
   headroom wrap codex "$@"
@@ -262,7 +295,7 @@ OPEN_GENTLE_SHELL() {
 }
 
 #-------------------------------------------------------------
-# Aliases DOCKER.
+# Docker: servicio y contenedores
 #-------------------------------------------------------------
 # Servicio Docker
 alias docker_start='sudo systemctl start docker'
@@ -290,21 +323,28 @@ alias docker_cstart='docker compose start'
 alias docker_cps='docker compose ps'
 alias docker_clogs='docker compose logs -f'
 
-# Limpieza interactiva
+# Limpieza interactiva (revisa el resumen antes de confirmar)
 alias docker_prune='docker system prune'
 
+#-------------------------------------------------------------
+# Sistema: energía y recursos
+#-------------------------------------------------------------
+# Apagar, reiniciar o cambiar el modo de inicio del equipo.
 alias APAGAR_PC="sudo shutdown -h now"
 alias REINICIAR_PC="sudo reboot"
 alias DESACTIVAR_MODO_GRAFICO="sudo systemctl set-default multi-user.target && sudo reboot"
 alias ACTIVAR_MODO_GRAFICO="sudo systemctl set-default graphical.target && sudo reboot"
+# Mostrar espacio en /var y memoria disponible.
 alias ALMACENAMIENTO_N_RAM="df -h /var && free -h"
 
+#-------------------------------------------------------------
+# Portapapeles: compatibilidad con pbcopy/pbpaste
+#-------------------------------------------------------------
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 
-
 #-------------------------------------------------------------
-# System
+# Red: Wi-Fi
 #-------------------------------------------------------------
 alias apagar_wifi="sudo nmcli device disconnect wlp0s20f3"
 alias encender_wifi="sudo nmcli device connect wlp0s20f3"
