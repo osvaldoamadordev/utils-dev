@@ -40,6 +40,11 @@ var scripts = []Script{
 		NeedsSudo:   true,
 	},
 	{
+		Name:        "install-ssh-key.sh",
+		Description: "Instala una clave pública SSH en un servidor con confirmación y modo de simulación.",
+		Warning:     "Verifica el destino y la huella; nunca desactiva la verificación de identidad del servidor.",
+	},
+	{
 		Name:        "ubuntu-maintenance.sh",
 		Description: "Muestra un inventario y ofrece mantenimiento interactivo de herramientas en Ubuntu.",
 		Warning:     "Las actualizaciones pueden cambiar versiones y la limpieza elimina cachés.",
@@ -152,6 +157,8 @@ func ValidateScriptArgs(script Script, args []string) error {
 				return fmt.Errorf("puerto SSH inválido: debe ser un número entre 1 y 65535")
 			}
 		}
+	case "install-ssh-key.sh":
+		return nil
 	case "ubuntu-maintenance.sh":
 		if len(args) != 0 {
 			return fmt.Errorf("%s no acepta argumentos", script.Name)

@@ -7,6 +7,7 @@ Este repositorio reúne scripts, utilidades y curiosidades para desarrolladores 
 - [`scripts/add-worktree.sh`](scripts/add-worktree.sh): crea worktrees de Git para trabajar en ramas de funcionalidad.
 - [`scripts/backup-pc-work.sh`](scripts/backup-pc-work.sh): respalda rutas de trabajo y configuraciones seleccionadas del PC.
 - [`scripts/harden-ubuntu26.sh`](scripts/harden-ubuntu26.sh): configura medidas básicas de seguridad para Ubuntu 26 y SSH.
+- [`scripts/install-ssh-key.sh`](scripts/install-ssh-key.sh): instala una clave pública en un servidor remoto con confirmación previa.
 - [`scripts/ubuntu-maintenance.sh`](scripts/ubuntu-maintenance.sh): inventario, actualización y limpieza interactiva de herramientas en Ubuntu Server.
 - [`scripts/backup-server.sh`](scripts/backup-server.sh): respaldo de proyectos y configuraciones personales del servidor.
 - [`cmd/script-panel/`](cmd/script-panel/): CLI en Go con Cobra para consultar, previsualizar y ejecutar scripts.

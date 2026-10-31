@@ -9,5 +9,6 @@ del directorio [`scripts/`](../../scripts/).
 | [`backup-pc-work.sh`](../../scripts/backup-pc-work.sh) | [Respaldar archivos de trabajo del PC](backup-pc-work.md) |
 | [`backup-server.sh`](../../scripts/backup-server.sh) | [Respaldar el home del servidor](backup-server.md) |
 | [`harden-ubuntu26.sh`](../../scripts/harden-ubuntu26.sh) | [Endurecer Ubuntu 26](harden-ubuntu26.md) |
+| [`install-ssh-key.sh`](../../scripts/install-ssh-key.sh) | [Instalar una clave SSH en un servidor](install-ssh-key.md) |
 | [`ubuntu-maintenance.sh`](../../scripts/ubuntu-maintenance.sh) | [Mantener Ubuntu Server](ubuntu-maintenance.md) |
 | [`script-panel.sh`](../../scripts/script-panel.sh) | [Consultar y previsualizar scripts](script-panel.md) |

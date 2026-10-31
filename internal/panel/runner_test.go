@@ -24,6 +24,7 @@ func TestValidateScriptArgs(t *testing.T) {
 		{name: "valid ssh port", script: "harden-ubuntu26.sh", args: []string{"65535"}},
 		{name: "zero ssh port", script: "harden-ubuntu26.sh", args: []string{"0"}, wantErrPart: "puerto SSH inválido"},
 		{name: "out of range ssh port", script: "harden-ubuntu26.sh", args: []string{"65536"}, wantErrPart: "puerto SSH inválido"},
+		{name: "ssh key installation options", script: "install-ssh-key.sh", args: []string{"--user", "admin", "--host", "server", "--dry-run"}},
 		{name: "maintenance has no args", script: "ubuntu-maintenance.sh", args: []string{"--dry-run"}, wantErrPart: "no acepta argumentos"},
 		{name: "unknown script", script: "../README.md", wantErrPart: "no registrado"},
 	}
