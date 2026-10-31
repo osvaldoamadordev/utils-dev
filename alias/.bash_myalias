@@ -2,22 +2,62 @@
 #-------------------------------------------------------------
 # Aliases for Git.
 #-------------------------------------------------------------
-alias getrb="git checkout --track origin/$1"
+getrb() {
+  if (($# != 1)); then
+    printf 'Uso: getrb <rama-remota>\n' >&2
+    return 2
+  fi
+  git switch --track -- "origin/$1"
+}
 alias gc="git clone"
 alias glog="git log"
 alias gstatus="git status"
 alias g='git'
 alias gamend="git commit --amend --no-edit"      #Commit changes onto previous commit.
 alias gcommit="gitmoji -c"                      #Gitmoji commit standard.
-alias gpull='git pull origin $(git_current_branch)'
-alias gpush='git push origin $(git_current_branch)'
+gpull() {
+  local branch
+  branch=$(current_branch) || return
+  if [[ -z "$branch" ]]; then
+    printf 'No hay una rama actual (¿HEAD separado?).\n' >&2
+    return 1
+  fi
+  git pull origin "$branch" "$@"
+}
+gpush() {
+  local branch
+  branch=$(current_branch) || return
+  if [[ -z "$branch" ]]; then
+    printf 'No hay una rama actual (¿HEAD separado?).\n' >&2
+    return 1
+  fi
+  git push origin "$branch" "$@"
+}
 alias grv="git remote set-url origin"
-alias gadd='git add .'
+gadd() {
+  if (($# == 0)); then
+    printf 'Uso: gadd <archivo o ruta...>\n' >&2
+    return 2
+  fi
+  git add -- "$@"
+}
 alias greset='git reset'
 alias gstash='git stash'
 alias gstashpop='git stash pop'
-alias gnbranch="git checkout -b $1"
-alias gcbranch="git checkout $1"f
+gnbranch() {
+  if (($# < 1 || $# > 2)); then
+    printf 'Uso: gnbranch <nombre-rama> [rama-base]\n' >&2
+    return 2
+  fi
+  git switch -c "$@"
+}
+gcbranch() {
+  if (($# != 1)); then
+    printf 'Uso: gcbranch <rama>\n' >&2
+    return 2
+  fi
+  git switch -- "$1"
+}
 alias glsb="git branch"
 alias glogarbol="git log --graph --decorate --oneline"
 alias deletecommitconcambios="git reset --soft HEAD~1"
@@ -49,11 +89,9 @@ alias gomaincarpit="git checkout main_mpcarpit"
 
 alias mergeprod="git checkout production && git merge develop"
 
-# Will return the current branch name
-# Usage example: git pull origin $(current_branch)
+# Will return the current branch name, or an empty string for detached HEAD.
 function current_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-  echo ${ref#refs/heads/}
+  git branch --show-current
 }
 
 #-------------------------------------------------------------
@@ -76,26 +114,70 @@ alias deletenodemodules="rm -rf node_modules"
 # Aliases for general stuff.
 #-------------------------------------------------------------
 alias nf=neofetch
-alias ls="ls -la"                          # colorize `ls` output
-alias reload_zsh="source ~/.zshrc"             # reload ZSH
-alias editar="code $HOME/.zshrc"
-alias editalias="code $HOME/.bash_myalias"
-alias cwd='pwd | pbcopy'                      #copy ruta
-alias home="cd ~"                             #go the home user
-alias HOME="cd ~"                             #go the home user
-alias findd="ls | grep $1"
+alias ll='ls -lah --color=auto'
+reload() {
+  if [[ -n ${ZSH_VERSION:-} ]]; then
+    source "$HOME/.zshrc"
+  elif [[ -n ${BASH_VERSION:-} ]]; then
+    source "$HOME/.bashrc"
+  else
+    printf 'Shell no compatible: no se pudo identificar Bash o Zsh.\n' >&2
+    return 2
+  fi
+}
+reload_bash() {
+  if [[ -z ${BASH_VERSION:-} ]]; then
+    printf 'reload_bash solo funciona en Bash; en Zsh usa reload o reload_zsh.\n' >&2
+    return 2
+  fi
+  source "$HOME/.bashrc"
+}
+reload_zsh() {
+  if [[ -z ${ZSH_VERSION:-} ]]; then
+    printf 'reload_zsh solo funciona en Zsh; en Bash usa reload o reload_bash.\n' >&2
+    return 2
+  fi
+  source "$HOME/.zshrc"
+}
+editar() {
+  code "$HOME/.bashrc"
+}
+editalias() {
+  code "$HOME/.bash_myalias"
+}
+cwd() {
+  pwd | pbcopy
+}
+home() {
+  cd "$HOME"
+}
+findd() {
+  if (($# != 1)); then
+    printf 'Uso: findd <texto>\n' >&2
+    return 2
+  fi
+  find . -maxdepth 1 -iname "*$1*" -print
+}
 
 #-------------------------------------------------------------
 # Aliases Personal
 #-------------------------------------------------------------
-alias myprojects="cd ~/Projects"
-alias congob="cd ~/Projects/conGob"
-alias altum="cd ~/Projects/altum-erp"
+myprojects() {
+  cd "$HOME/Projects"
+}
+congob() {
+  cd "$HOME/Projects/conGob"
+}
+altum() {
+  cd "$HOME/Projects/altum-erp"
+}
 
 #-------------------------------------------------------------
 # Procesos
 #-------------------------------------------------------------
-alias  procesosangular="ps | grep 'ng serve'"
+procesosangular() {
+  pgrep -af -- 'ng serve'
+}
 
 #-------------------------------------------------------------
 # Yarn
@@ -111,13 +193,19 @@ alias dcup="docker compose up"
 #-------------------------------------------------------------
 # Alias para proyects
 #-------------------------------------------------------------
-alias caranty="cd ~/Caranty"
-alias caranty_crm="cd ~/Caranty/CarantyCRM_Monorepo"
+caranty() {
+  cd "$HOME/Caranty"
+}
+caranty_crm() {
+  cd "$HOME/Caranty/CarantyCRM_Monorepo"
+}
 
 #-------------------------------------------------------------
 # TMUX
 #-------------------------------------------------------------
-alias crm_dev_ia="~/scripts-dev/dev_agents_teams_crm"
+crm_dev_ia() {
+  "$HOME/scripts-dev/dev_agents_teams_crm" "$@"
+}
 alias kill_tmux="tmux kill-server"
 alias ventana_tmux_vertical="tmux split-window -hf"
 alias ventana_tmux_horizontal="tmux split-window -vf"
@@ -125,25 +213,41 @@ alias ventana_tmux_horizontal="tmux split-window -vf"
 #-------------------------------------------------------------
 # Scripts Development
 #-------------------------------------------------------------
-alias wt="$HOME/scripts-dev/wt"
+wt() {
+  "$HOME/scripts-dev/wt" "$@"
+}
 
 #-------------------------------------------------------------
 # Aliases for Backups
 #-------------------------------------------------------------
-alias backup="$HOME/scripts-dev/respaldo_ubuntu.sh"
+backup() {
+  "$HOME/scripts-dev/respaldo_ubuntu.sh" "$@"
+}
 
 #-------------------------------------------------------------
 # Aliases for AI tools
 #-------------------------------------------------------------
-alias CODEX_OPEN="headroom wrap codex --dangerously-bypass-approvals-and-sandbox $1"
-#alias OPEN_CLAUDE="headroom wrap claude --dangerously-skip-permissions $1"
+CODEX_OPEN() {
+  headroom wrap codex "$@"
+}
 # LOSSLESS=1: sin compresión con pérdida (con PROTECT=Bash solo, los cuerpos de skill y los ficheros pegados como mensaje seguían mutilados).
 # --port 8788: wrap reutiliza el proxy que ya escucha en 8787, que arrancó sin estas variables; un puerto propio arranca uno que las hereda.
 
-alias CLAUDE_OPEN="HEADROOM_PROTECT_TOOL_RESULTS=Bash CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 HEADROOM_LOSSLESS=1 headroom wrap claude --port 8788 --dangerously-skip-permissions $1"
-alias COPILOT_OPEN="copilot $1"
-alias OPENCODE="headroom wrap opencode $1"
-alias OPEN_GENTLE_SHELL="gentle-shell $1"
+CLAUDE_OPEN() {
+  HEADROOM_PROTECT_TOOL_RESULTS=Bash \
+    CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 \
+    HEADROOM_LOSSLESS=1 \
+    headroom wrap claude --port 8788 "$@"
+}
+COPILOT_OPEN() {
+  copilot "$@"
+}
+OPENCODE() {
+  headroom wrap opencode "$@"
+}
+OPEN_GENTLE_SHELL() {
+  gentle-shell "$@"
+}
 
 #-------------------------------------------------------------
 # Aliases DOCKER.
