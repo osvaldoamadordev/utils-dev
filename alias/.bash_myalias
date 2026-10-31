@@ -17,7 +17,7 @@ alias gamend="git commit --amend --no-edit"      #Commit changes onto previous c
 alias gcommit="gitmoji -c"                      #Gitmoji commit standard.
 gpull() {
   local branch
-  branch=$(current_branch) || return
+  branch=$(_alias_current_branch) || return
   if [[ -z "$branch" ]]; then
     printf 'No hay una rama actual (¿HEAD separado?).\n' >&2
     return 1
@@ -26,7 +26,7 @@ gpull() {
 }
 gpush() {
   local branch
-  branch=$(current_branch) || return
+  branch=$(_alias_current_branch) || return
   if [[ -z "$branch" ]]; then
     printf 'No hay una rama actual (¿HEAD separado?).\n' >&2
     return 1
@@ -90,7 +90,7 @@ alias gomaincarpit="git checkout main_mpcarpit"
 alias mergeprod="git checkout production && git merge develop"
 
 # Will return the current branch name, or an empty string for detached HEAD.
-function current_branch() {
+_alias_current_branch() {
   git branch --show-current
 }
 
