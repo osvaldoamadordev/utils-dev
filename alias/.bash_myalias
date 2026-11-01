@@ -342,7 +342,7 @@ alias docker_cps='docker compose ps'
 alias docker_clogs='docker compose logs -f'
 
 # Limpieza interactiva (revisa el resumen antes de confirmar)
-alias docker_prune='docker system prune'
+alias docker-clean='docker system prune -a --volumes -f'
 
 #-------------------------------------------------------------
 # Sistema: energía y recursos
