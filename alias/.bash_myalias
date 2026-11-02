@@ -291,7 +291,7 @@ descargar_backup_servidor() {
 # Herramientas de IA
 #-------------------------------------------------------------
 CODEX_OPEN() {
-  headroom wrap codex "$@"
+  headroom wrap codex --yolo "$@"
 }
 # LOSSLESS=1: sin compresión con pérdida (con PROTECT=Bash solo, los cuerpos de skill y los ficheros pegados como mensaje seguían mutilados).
 # --port 8788: wrap reutiliza el proxy que ya escucha en 8787, que arrancó sin estas variables; un puerto propio arranca uno que las hereda.
@@ -300,7 +300,7 @@ CLAUDE_OPEN() {
   HEADROOM_PROTECT_TOOL_RESULTS=Bash \
     CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 \
     HEADROOM_LOSSLESS=1 \
-    headroom wrap claude --port 8788 "$@"
+    headroom wrap claude --dangerously-skip-permissions --port 8788 "$@"
 }
 COPILOT_OPEN() {
   copilot "$@"
