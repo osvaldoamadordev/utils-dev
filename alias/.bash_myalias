@@ -176,7 +176,7 @@ editar() {
   code "$HOME/.bashrc"
 }
 editalias() {
-  code "$HOME/.bash_myalias"
+  code "$HOME/utils-dev/alias/.bash_myalias"
 }
 
 #-------------------------------------------------------------
