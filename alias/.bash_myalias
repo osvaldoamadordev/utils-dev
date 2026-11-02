@@ -300,7 +300,7 @@ CLAUDE_OPEN() {
   HEADROOM_PROTECT_TOOL_RESULTS=Bash \
     CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 \
     HEADROOM_LOSSLESS=1 \
-    headroom wrap claude --dangerously-skip-permissions --port 8788 "$@"
+    headroom wrap claude --dangerously-skip-permissions "$@"
 }
 COPILOT_OPEN() {
   copilot "$@"
