@@ -302,6 +302,8 @@ CLAUDE_OPEN() {
     HEADROOM_LOSSLESS=1 \
     headroom wrap claude --dangerously-skip-permissions "$@"
 }
+alias OPEN_CLAUDE_CARANTY="CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1 headroom wrap claude --dangerously-skip-permissions $1"
+
 COPILOT_OPEN() {
   copilot "$@"
 }
