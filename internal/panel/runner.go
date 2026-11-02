@@ -37,7 +37,7 @@ func CommandFor(root string, script Script, args []string) (*exec.Cmd, error) {
 
 func RunScript(root string, script Script, args []string) error {
 	if os.Geteuid() == 0 {
-		return fmt.Errorf("no ejecutes el panel como root; usa sudo solo para harden-ubuntu26.sh")
+		return fmt.Errorf("no ejecutes el panel como root; usa sudo solo para los scripts que lo requieren")
 	}
 	command, err := CommandFor(root, script, args)
 	if err != nil {

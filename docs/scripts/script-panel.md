@@ -29,13 +29,17 @@ go run ./cmd/script-panel preview backup-server.sh
 go run ./cmd/script-panel run add-worktree.sh nueva-funcionalidad
 go run ./cmd/script-panel run backup-server.sh /home/usuario /ruta/segura
 go run ./cmd/script-panel run harden-ubuntu26.sh 22
+go run ./cmd/script-panel run optimizar-ubuntu-server-26.sh
 ```
 
 `run` siempre requiere una terminal y solicita confirmación. El nombre del
 script debe pertenecer a la lista permitida; los argumentos se pasan como
 valores separados, nunca como comandos de shell. El panel no se puede ejecutar
-como `root`; `harden-ubuntu26.sh` es el único que solicita `sudo`.
+como `root`; los scripts que modifican la configuración del sistema solicitan
+`sudo` solo después de confirmar.
 
 Antes de confirmar el endurecimiento de SSH, prueba una segunda conexión con
 llave y revisa [su guía](./harden-ubuntu26.md). Consulta las demás guías de
 este directorio para conocer requisitos y precauciones.
+Para la optimización de Ubuntu, revisa [su guía](./optimizar-ubuntu-server-26.md)
+antes de confirmar.

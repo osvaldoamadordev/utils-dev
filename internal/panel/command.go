@@ -83,7 +83,8 @@ func newRunCommand(projectDirectory *string) *cobra.Command {
 			"El comando siempre pide confirmación y rechaza la ejecución si no hay una terminal interactiva.",
 		Example: "  script-panel run add-worktree.sh nueva-funcionalidad\n" +
 			"  script-panel run backup-server.sh /home/usuario /ruta/segura\n" +
-			"  script-panel run harden-ubuntu26.sh 22",
+			"  script-panel run harden-ubuntu26.sh 22\n" +
+			"  script-panel run optimizar-ubuntu-server-26.sh",
 		Args: cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := ensureNotRoot(); err != nil {
@@ -182,7 +183,7 @@ func resolveRootFromCommand(cmd *cobra.Command) (string, error) {
 
 func ensureNotRoot() error {
 	if os.Geteuid() == 0 {
-		return fmt.Errorf("no ejecutes el panel como root; solo harden-ubuntu26.sh solicita sudo")
+		return fmt.Errorf("no ejecutes el panel como root; los scripts que requieren privilegios solicitan sudo")
 	}
 	return nil
 }

@@ -45,6 +45,12 @@ var scripts = []Script{
 		Warning:     "Verifica el destino y la huella; nunca desactiva la verificación de identidad del servidor.",
 	},
 	{
+		Name:        "optimizar-ubuntu-server-26.sh",
+		Description: "Aplica ajustes permanentes de rendimiento a Ubuntu Server 26 para desarrollo.",
+		Warning:     "Modifica sysctl, límites, /etc/fstab y Docker; revisa la vista previa y conserva acceso al servidor.",
+		NeedsSudo:   true,
+	},
+	{
 		Name:        "ubuntu-maintenance.sh",
 		Description: "Muestra un inventario y ofrece mantenimiento interactivo de herramientas en Ubuntu.",
 		Warning:     "Las actualizaciones pueden cambiar versiones y la limpieza elimina cachés.",
@@ -159,6 +165,10 @@ func ValidateScriptArgs(script Script, args []string) error {
 		}
 	case "install-ssh-key.sh":
 		return nil
+	case "optimizar-ubuntu-server-26.sh":
+		if len(args) != 0 {
+			return fmt.Errorf("%s no acepta argumentos", script.Name)
+		}
 	case "ubuntu-maintenance.sh":
 		if len(args) != 0 {
 			return fmt.Errorf("%s no acepta argumentos", script.Name)

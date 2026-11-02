@@ -10,5 +10,6 @@ del directorio [`scripts/`](../../scripts/).
 | [`backup-server.sh`](../../scripts/backup-server.sh) | [Respaldar el home del servidor](backup-server.md) |
 | [`harden-ubuntu26.sh`](../../scripts/harden-ubuntu26.sh) | [Endurecer Ubuntu 26](harden-ubuntu26.md) |
 | [`install-ssh-key.sh`](../../scripts/install-ssh-key.sh) | [Instalar una clave SSH en un servidor](install-ssh-key.md) |
+| [`optimizar-ubuntu-server-26.sh`](../../scripts/optimizar-ubuntu-server-26.sh) | [Optimizar Ubuntu Server 26](optimizar-ubuntu-server-26.md) |
 | [`ubuntu-maintenance.sh`](../../scripts/ubuntu-maintenance.sh) | [Mantener Ubuntu Server](ubuntu-maintenance.md) |
 | [`script-panel.sh`](../../scripts/script-panel.sh) | [Consultar y previsualizar scripts](script-panel.md) |

@@ -25,6 +25,8 @@ func TestValidateScriptArgs(t *testing.T) {
 		{name: "zero ssh port", script: "harden-ubuntu26.sh", args: []string{"0"}, wantErrPart: "puerto SSH inválido"},
 		{name: "out of range ssh port", script: "harden-ubuntu26.sh", args: []string{"65536"}, wantErrPart: "puerto SSH inválido"},
 		{name: "ssh key installation options", script: "install-ssh-key.sh", args: []string{"--user", "admin", "--host", "server", "--dry-run"}},
+		{name: "ubuntu optimization has no args", script: "optimizar-ubuntu-server-26.sh"},
+		{name: "ubuntu optimization rejects args", script: "optimizar-ubuntu-server-26.sh", args: []string{"--dry-run"}, wantErrPart: "no acepta argumentos"},
 		{name: "maintenance has no args", script: "ubuntu-maintenance.sh", args: []string{"--dry-run"}, wantErrPart: "no acepta argumentos"},
 		{name: "unknown script", script: "../README.md", wantErrPart: "no registrado"},
 	}
@@ -68,19 +70,33 @@ func TestCommandForUsesFixedScriptAndArguments(t *testing.T) {
 	}
 }
 
-func TestCommandForUsesSudoOnlyForHardening(t *testing.T) {
+func TestCommandForUsesSudoForPrivilegedScripts(t *testing.T) {
 	root := t.TempDir()
-	script := Script{Name: "harden-ubuntu26.sh"}
-	command, err := CommandFor(root, script, []string{"22"})
-	if err != nil {
-		t.Fatalf("CommandFor() error = %v", err)
+	tests := []struct {
+		name string
+		args []string
+	}{
+		{name: "harden-ubuntu26.sh", args: []string{"22"}},
+		{name: "optimizar-ubuntu-server-26.sh"},
 	}
-	if filepath.Base(command.Path) != "sudo" {
-		t.Fatalf("command path = %q, want sudo", command.Path)
-	}
-	wantArgs := []string{"sudo", "--", "bash", filepath.Join(root, "scripts", script.Name), "22"}
-	if !reflect.DeepEqual(command.Args, wantArgs) {
-		t.Fatalf("command args = %#v, want %#v", command.Args, wantArgs)
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			script, ok := FindScript(test.name)
+			if !ok {
+				t.Fatalf("script %q not found in catalog", test.name)
+			}
+			command, err := CommandFor(root, script, test.args)
+			if err != nil {
+				t.Fatalf("CommandFor() error = %v", err)
+			}
+			if filepath.Base(command.Path) != "sudo" {
+				t.Fatalf("command path = %q, want sudo", command.Path)
+			}
+			wantArgs := append([]string{"sudo", "--", "bash", filepath.Join(root, "scripts", script.Name)}, test.args...)
+			if !reflect.DeepEqual(command.Args, wantArgs) {
+				t.Fatalf("command args = %#v, want %#v", command.Args, wantArgs)
+			}
+		})
 	}
 }
 

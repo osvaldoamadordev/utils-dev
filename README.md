@@ -8,6 +8,7 @@ Este repositorio reúne scripts, utilidades y curiosidades para desarrolladores 
 - [`scripts/backup-pc-work.sh`](scripts/backup-pc-work.sh): respalda rutas de trabajo y configuraciones seleccionadas del PC.
 - [`scripts/harden-ubuntu26.sh`](scripts/harden-ubuntu26.sh): configura medidas básicas de seguridad para Ubuntu 26 y SSH.
 - [`scripts/install-ssh-key.sh`](scripts/install-ssh-key.sh): instala una clave pública en un servidor remoto con confirmación previa.
+- [`scripts/optimizar-ubuntu-server-26.sh`](scripts/optimizar-ubuntu-server-26.sh): aplica ajustes de rendimiento de forma permanente en Ubuntu Server 26.
 - [`scripts/ubuntu-maintenance.sh`](scripts/ubuntu-maintenance.sh): inventario, actualización y limpieza interactiva de herramientas en Ubuntu Server.
 - [`scripts/backup-server.sh`](scripts/backup-server.sh): respaldo de proyectos y configuraciones personales del servidor.
 - [`cmd/script-panel/`](cmd/script-panel/): CLI en Go con Cobra para consultar, previsualizar y ejecutar scripts.
@@ -38,9 +39,9 @@ previa. También puedes usar los subcomandos `list`, `preview` y `run`; este
 último siempre pide confirmación. La ruta anterior
 `./scripts/script-panel.sh` se conserva como lanzador compatible.
 
-Ejecuta el panel como usuario normal, nunca con `sudo`. Solo el endurecimiento
-de Ubuntu solicita `sudo`; revisa su guía y prueba una segunda sesión SSH con
-llave antes de confirmar.
+Ejecuta el panel como usuario normal, nunca con `sudo`. Los scripts que
+modifican la configuración del sistema solicitan `sudo` después de la
+confirmación; revisa sus guías y precauciones antes de ejecutarlos.
 
 Para abrir el menú interactivo:
 
