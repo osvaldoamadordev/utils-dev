@@ -81,26 +81,7 @@ alias goprod="git checkout production"
 #-------------------------------------------------------------
 # Git: ramas y remotos de proyectos
 #-------------------------------------------------------------
-alias gpushmainmpsantander="git push origin_mpsantander main_mpsantander:main"
-alias gpushdevmpsantander="git push origin_mpsantander develop_mpsantander:develop"
-
-
-alias gpushprodmpcarpit="git push origin_mpcarpit main_mpcarpit:main"
-alias gpushdevmpcarpit="git push origin_mpcarpit develop_mpcarpit:develop"
-
-alias gpulldevmpcarpit='git pull origin_mpcarpit develop'
-alias gpullprodmpcarpit='git pull origin_mpcarpit main'
-
-alias gpulldevmpsantander='git pull origin_mpsantander develop'
-alias gpullprodmpsantander='git pull origin_mpsantander main'
-
-alias godevsantander="git checkout develop_mpsantander"
-alias gomainsantander="git checkout main_mpsantander"
-
-alias godevcarpit="git checkout develop_mpcarpit"
-alias gomaincarpit="git checkout main_mpcarpit"
-
-alias mergeprod="git checkout production && git merge develop"
+alias gitmergeprod="git checkout production && git merge development"
 
 # Will return the current branch name, or an empty string for detached HEAD.
 _alias_current_branch() {
